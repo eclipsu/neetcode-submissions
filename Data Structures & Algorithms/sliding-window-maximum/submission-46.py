@@ -1,0 +1,31 @@
+from collections import deque
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+
+        queue = deque() # this will store maximum so far, added from right, left most = current window's max
+        result = []
+
+        left = 0
+        right = 0
+
+
+        # [0, 1, 2]
+
+        while right < len(nums):
+            while queue and nums[queue[-1]] < nums[right]:
+                queue.pop()
+
+            
+            queue.append(right)
+
+            
+            if left > queue[0]:
+                queue.popleft()
+            
+            if right + 1 >= k:
+                result.append(nums[queue[0]])
+                left += 1
+
+            right += 1
+        
+        return result
